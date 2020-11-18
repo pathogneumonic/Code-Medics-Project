@@ -5,7 +5,6 @@ import EmergencyPage from './Pages/EmergencyType';
 import LocationPage from './Pages/LocationPage';
 import LoginPage from './Pages/LoginPage';
 import SignupPage from './Pages/SignupPage';
-import './App.css';
 
 function App() {
   return (

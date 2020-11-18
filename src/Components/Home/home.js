@@ -2,8 +2,8 @@ import React from 'react';
 import './home.css';
 
 const Home = () => (
-    <main className="flex flex__center">
-        <figure aria-label="decorative">
+    <div className="home-container">
+        <figure className="figure__home" aria-label="decorative">
             <svg width="257" height="182" viewBox="0 0 257 182" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path opacity="0.1" d="M85.9982 180.9C98.4652 180.9 108.572 179.279 108.572 177.281C108.572 175.282 98.4652 173.662 85.9982 173.662C73.5312 173.662 63.4247 175.282 63.4247 177.281C63.4247 179.279 73.5312 180.9 85.9982 180.9Z" fill="#9A19BA" />
                 <path opacity="0.1" d="M208.705 181.001C224.261 181.001 236.873 179.381 236.873 177.383C236.873 175.384 224.261 173.764 208.705 173.764C193.148 173.764 180.536 175.384 180.536 177.383C180.536 179.381 193.148 181.001 208.705 181.001Z" fill="#9A19BA" />
@@ -185,10 +185,10 @@ const Home = () => (
                 </defs>
             </svg>
         </figure>
-        <h1>Need emergency medical help?</h1>
+        <h1 className="heading__home">Need emergency medical help?</h1>
         <p>Please press the button below to find hospitals near you.</p>
-        <a className="btn" href="/emergency">Get Help</a>
-    </main>
+        <a className="btn btn__get-help" href="/emergency">Get Help</a>
+    </div>
 )
 
 export default Home

@@ -1,10 +1,11 @@
 import React from "react";
 import { Link } from 'react-router-dom';
 import Button from "../Button/button";
+import './auth.css';
 
-const Login = () => {
-    <main>
-        <h1>Sign In</h1>
+const Login = () => (
+    <main className="auth-page">
+        <h1 className="heading__auth">Sign In</h1>
         <figure aria-label='decorative'>
             <svg width="229" height="137" viewBox="0 0 229 137" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M175.328 135.362C172.396 132.884 170.615 128.971 171.082 125.161C171.549 121.351 174.442 117.849 178.194 117.04C181.946 116.231 186.223 118.47 187.363 122.136C187.99 115.069 188.713 107.707 192.47 101.689C195.871 96.24 201.764 92.3411 208.149 91.6436C214.535 90.946 221.258 93.5805 225.241 98.6206C229.223 103.661 230.198 110.988 227.409 116.775C225.354 121.037 221.569 124.21 217.602 126.79C204.786 135.06 189.414 138.423 174.315 136.26L175.328 135.362Z" fill="#F2F2F2" />
@@ -40,11 +41,11 @@ const Login = () => {
             <input type="email" name="email" id="email" required aria-required="true" />
             <label htmlFor="password">Password</label>
             <input type="password" name="password" id="password" required aria-required="true" />
-            <Link to="/reset-password">Forgot Password?</Link>
+            <Link to="/reset-password" className="light-link">Forgot Password?</Link>
             <Button text="Sign In" type="submit" />
-            <p>Don't have an account?<Link to="/signup" class="btn">Sign Up</Link></p>
+            <p>Don't have an account?<Link to="/signup" className="bold-link"> Sign Up</Link></p>
         </form>
     </main>
-}
+)
 
 export default Login;

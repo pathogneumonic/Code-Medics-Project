@@ -1,10 +1,11 @@
 import React from "react";
 import { Link } from 'react-router-dom';
 import Button from "../Button/button";
+import '../Login/auth.css';
 
-const SignUp = () => {
-    <main>
-        <h1>Sign Up</h1>
+const SignUp = () => (
+    <main className="auth-page">
+        <h1 className="heading__auth">Sign Up</h1>
         <figure aria-label='decorative'>
             <svg width="218" height="151" viewBox="0 0 218 151" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path opacity="0.1" d="M123.307 20.4912C109.333 20.5098 95.8831 16.5487 83.0182 12.1482C70.1533 7.74773 57.3874 2.8201 43.6738 0.732027C34.8542 -0.610173 24.8251 -0.486795 17.9309 4.38662C11.2947 9.07498 9.37295 16.8347 8.44575 24.0037C7.74848 29.3968 7.42695 35.0572 10.0384 39.9904C11.8517 43.4151 14.9549 46.2378 17.142 49.5017C24.7765 60.8562 20.1853 75.3606 12.7658 86.9786C9.28696 92.4297 5.21176 97.6545 2.58157 103.418C-0.0486203 109.181 -1.12724 115.716 1.55529 121.405C4.21352 127.043 10.2179 131.135 16.6616 133.929C29.7471 139.616 44.9824 140.835 59.8083 141.304C92.6267 142.345 125.509 140.222 158.303 138.098C170.439 137.313 182.629 136.522 194.514 134.247C201.113 132.985 207.908 131.112 212.587 127.007C218.526 121.795 219.741 113.286 215.419 107.17C208.172 96.9105 189.061 94.9758 183.865 83.8755C180.999 77.7646 183.47 70.7563 187.11 64.866C194.916 52.2273 208.353 40.9064 208.579 26.7703C208.734 17.0627 201.747 7.59257 191.31 3.37343C180.371 -1.04573 165.455 0.0908373 157.791 8.32723C149.909 16.8123 135.644 20.4781 123.307 20.4912Z" fill="#9A19BA" />
@@ -106,12 +107,12 @@ const SignUp = () => {
             <input type="email" name="email" id="email" required aria-required="true" />
             <label htmlFor="password">Password</label>
             <input type="password" name="password" id="password" required aria-required="true" />
-            <label htmlFor="password">Repeat Password</label>
-            <input type="password" name="password" id="password" required aria-required="true" />
+            <label htmlFor="confirm-password">Repeat Password</label>
+            <input type="password" name="confirm-password" id="confirm-password" required aria-required="true" />
             <Button text="Sign Up" type="submit" />
-            <p>Already have an account?<Link to="/login" class="btn">Sign In</Link></p>
+            <p>Already have an account?<Link to="/login" className="bold-link"> Sign In</Link></p>
         </form>
     </main>
-}
+)
 
 export default SignUp;

@@ -1,0 +1,55 @@
+.auth-page {
+    display: block;
+    height: 100vh;
+    width: 100vw;
+}
+
+.heading__auth {
+    font-size: 1.8rem;
+    margin-bottom: 2.5rem;
+}
+
+.light-link {
+    color: black;
+    font-size: 0.8rem;
+    font-weight: 300px;
+}
+
+figure {
+    margin: 0 auto;
+    margin-bottom: 2.5rem;
+    width: fit-content;
+}
+
+.bold-link {
+    color: black;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    font-weight: normal;
+    font-size: 1rem;
+    margin-bottom: .4rem;
+}
+
+input {
+    background-color: #EAEAEA;
+    border: none;
+    border-radius: .5rem;
+    height: 3rem;
+    margin-bottom: 1rem;
+    margin-right: 1rem;
+}
+
+button {
+    font-family: inherit;
+    font-size: 1rem;
+    margin-left: 0;
+    width: 10.5rem;
+}
