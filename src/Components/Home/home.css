@@ -1,0 +1,18 @@
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+a {
+    text-decoration: none;
+}
+
+.btn {
+    background-color: #9A19BA;
+    border-radius: .5em;
+    color: white;
+    margin: 1em;
+    padding: 1em;
+}

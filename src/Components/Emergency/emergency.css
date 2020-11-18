@@ -1,0 +1,8 @@
+main {
+    height: 100vh;
+}
+
+.options {
+    padding: 1em auto;
+    border-bottom: .5em solid grey;
+}
