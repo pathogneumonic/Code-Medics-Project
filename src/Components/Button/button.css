@@ -6,3 +6,12 @@ button {
     margin: 1em;
     padding: 1em;
 }
+
+button:focus {
+    outline: none;
+}
+
+button:hover {
+    transform: translate(.2rem, -.08rem);
+    transform: scale(1.05, 1.05);
+}

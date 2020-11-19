@@ -1,40 +1,35 @@
 import React, { useState } from "react";
+import { useHistory } from 'react-router-dom';
 import axios from "axios";
+import LocationContext from "./locationContext";
 import Button from "../Button/button";
 import './emergency.css'
 
 const Emergency = () => {
     const [help, setHelp] = useState('');
-    const [location, setLocation] = useState({});
+    const coordinates = React.useContext(LocationContext);
+    let history = useHistory();
     const url = 'https://nothingyet.com';
 
-    function getHelp() {
-        setHelp(this.props.service);
-        getLocation();
+    const getHelp = (e) => {
+        console.log('clicked!');
+        setHelp(e.target.props.service);
 
         axios.post(url, {
             emergencyType: help,
-            userLocation: location
+            userLocation: coordinates
         })
-        .then(
-            console.log('posted') //then redirect user
-        )
-        .catch((err) => {
-            console.log(err);
-            alert('There was an error sending location information');
-        });
+            .then(
+                console.log('posted')
+            )
+            .then(redirect())
+            .catch((err) => {
+                console.log(err)
+            });
     }
 
-    const getLocation = () => {
-        if (!navigator.geolocation) {
-            return 'Geolocation is not supported by your browser';
-        } 
-        else {
-            navigator.geolocation.getCurrentPosition((position, error) => {
-                setLocation({ latitude: position.coords.latitude, longitude: position.coords.longitude });
-                if (error) { return 'Could not access location information' };
-            })
-        }
+    const redirect = () => {
+        history.push('/location')
     }
 
     return (
@@ -52,19 +47,22 @@ const Emergency = () => {
             <div className="option">
                 <h2>Surgical</h2>
                 <p>Examples are accidents, burns etc.</p>
-                <Button text="Get surgical help" onClick={getHelp}/>
+                <Button text="Get surgical help" service="obstetrics" onClick={getHelp} />
             </div>
 
             <div className="option">
                 <h2>Medical</h2>
                 <p>Examples are sudden pain, collapse etc.</p>
-                <Button text="Get medical help" onClick={getHelp}/>
+                <Button text="Get medical help" service="obstetrics" onClick={getHelp} />
             </div>
 
             <div className="option">
                 <h2>Obstetric</h2>
                 <p>Get help for pregnant women and women in labour.</p>
-                <Button text="Get obstetric help" service="obstetrics" onClick={getHelp}/>
+                <Button text="Get obstetric help" service="obstetrics" onClick={()=> {
+                    console.log('clicked');
+                    getHelp();
+                }} />
             </div>
         </div>
     );
@@ -75,5 +73,5 @@ export default Emergency
 //on click, post user location and required service to server>>>
 //which means, html5 geolocation, then post request>>>
 //do this via state >>>
-//redirect to interim page, retain location info
+//redirect to interim page>>>, retain location info
 //use info with Google Maps API

@@ -186,7 +186,7 @@ const Home = () => (
             </svg>
         </figure>
         <h1 className="heading__home">Need emergency medical help?</h1>
-        <p>Please press the button below to find hospitals near you.</p>
+        <p className="margin-bottom">Please press the button below to find hospitals near you.</p>
         <a className="btn btn__get-help" href="/emergency">Get Help</a>
     </div>
 )
