@@ -20,8 +20,8 @@ const Location = (location, zoomLevel) => {
 
     const [providers, setProviders] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    let sentRequest = false;
-    if (sentRequest === true) { setIsLoading(false) };
+    //let sentRequest = false;
+    //if (sentRequest === true) { setIsLoading(false) };
 
     useEffect(() => {
         const fetchInfo = () => {
@@ -46,14 +46,14 @@ const Location = (location, zoomLevel) => {
                     }
                     setProviders(arr)
                 })
-                .then(() => sentRequest = true)
+                .then(() => setIsLoading(false))
                 .catch((err) => {
                     console.log(err)
                 });
         }
 
         fetchInfo()
-    }, []);
+    }, [location]);
 
     const RenderLists = () => {
         for (const i of providers) {

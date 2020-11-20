@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useHistory } from 'react-router-dom';
-import LocationContext from "./locationContext";
 import Button from "../Button/button";
 import './emergency.css'
 
@@ -9,8 +8,8 @@ const Emergency = () => {
     let history = useHistory();
 
     const getHelp = (e) => {
-        console.log('clicked!');
         setHelp(e.target.props.service);
+        console.log(help);
         redirect();
     }
 
