@@ -1,31 +1,17 @@
 import React, { useState } from "react";
 import { useHistory } from 'react-router-dom';
-import axios from "axios";
 import LocationContext from "./locationContext";
 import Button from "../Button/button";
 import './emergency.css'
 
 const Emergency = () => {
     const [help, setHelp] = useState('');
-    const coordinates = React.useContext(LocationContext);
     let history = useHistory();
-    const url = 'https://nothingyet.com';
 
     const getHelp = (e) => {
         console.log('clicked!');
         setHelp(e.target.props.service);
-
-        axios.post(url, {
-            emergencyType: help,
-            userLocation: coordinates
-        })
-            .then(
-                console.log('posted')
-            )
-            .then(redirect())
-            .catch((err) => {
-                console.log(err)
-            });
+        redirect();
     }
 
     const redirect = () => {
@@ -59,7 +45,7 @@ const Emergency = () => {
             <div className="option">
                 <h2>Obstetric</h2>
                 <p>Get help for pregnant women and women in labour.</p>
-                <Button text="Get obstetric help" service="obstetrics" onClick={()=> {
+                <Button text="Get obstetric help" service="obstetrics" onClick={() => {
                     console.log('clicked');
                     getHelp();
                 }} />

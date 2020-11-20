@@ -9,7 +9,7 @@ import SignupPage from './Pages/SignupPage';
 
 function App() {
   const [location, setLocation] = useState({});
-
+  
   const getLocation = () => {
     if (!navigator.geolocation) {
       return 'Geolocation is not supported by your browser';
