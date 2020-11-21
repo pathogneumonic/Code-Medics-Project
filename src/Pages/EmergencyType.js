@@ -7,4 +7,4 @@ const EmergencyPage = () => (
     </div >
 )
 
-export default EmergencyPage;
+export default EmergencyPage

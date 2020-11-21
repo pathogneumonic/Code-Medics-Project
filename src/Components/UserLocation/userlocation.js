@@ -1,25 +1,83 @@
-import React from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import GoogleMapReact from 'google-map-react'
-import LocationContext from "../Emergency/locationContext";
+import axios from "axios";
+import ProviderInstance from './response';
+import LocationContext from "../Contexts/locationContext";
+import HelpContext from "../Contexts/helpContext";
 import './userlocation.css';
+
 
 const LocationPin = (props) => (
     <figure>
-        <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="10.5" cy="10.5" r="10.5" fill="#9A19BA" />
+        <svg width="232" height="278" viewBox="0 0 232 278" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g id="Group 7">
+                <circle id="Ellipse 1" cx="92.5" cy="138.5" r="10.5" fill="#9A19BA" />
+                <path id="Subtract" fillRule="evenodd" clipRule="evenodd" d="M93 177C113.987 177 131 159.987 131 139C131 118.013 113.987 101 93 101C72.0132 101 55 118.013 55 139C55 159.987 72.0132 177 93 177ZM93 172.306C111.394 172.306 126.306 157.394 126.306 139C126.306 120.606 111.394 105.694 93 105.694C74.6057 105.694 59.6941 120.606 59.6941 139C59.6941 157.394 74.6057 172.306 93 172.306Z" fill="#9A19BA" fillOpacity="0.7" />
+                <path id="Subtract_2" fillRule="evenodd" clipRule="evenodd" d="M93 207C130.555 207 161 176.555 161 139C161 101.445 130.555 71 93 71C55.4446 71 25 101.445 25 139C25 176.555 55.4446 207 93 207ZM93 198.6C125.916 198.6 152.6 171.916 152.6 139C152.6 106.084 125.916 79.4 93 79.4C60.0838 79.4 33.4 106.084 33.4 139C33.4 171.916 60.0838 198.6 93 198.6Z" fill="#9A19BA" fillOpacity="0.5" />
+                <path id="Subtract_3" fillRule="evenodd" clipRule="evenodd" d="M93 238C147.676 238 192 193.676 192 139C192 84.3238 147.676 40 93 40C38.3238 40 -6 84.3238 -6 139C-6 193.676 38.3238 238 93 238ZM93 225.771C140.922 225.771 179.771 186.922 179.771 139C179.771 91.0779 140.922 52.2294 93 52.2294C45.0779 52.2294 6.22941 91.0779 6.22941 139C6.22941 186.922 45.0779 225.771 93 225.771Z" fill="#9A19BA" fillOpacity="0.3" />
+                <path id="Subtract_4" fillRule="evenodd" clipRule="evenodd" d="M93 278C169.768 278 232 215.768 232 139C232 62.2324 169.768 0 93 0C16.2324 0 -46 62.2324 -46 139C-46 215.768 16.2324 278 93 278ZM93 270C165.349 270 224 211.349 224 139C224 66.6507 165.349 8 93 8C20.6507 8 -38 66.6507 -38 139C-38 211.349 20.6507 270 93 270Z" fill="#9A19BA" fillOpacity="0.2" />
+            </g>
         </svg>
     </figure>
 )
 
 const Location = (location, zoomLevel) => {
-    location = React.useContext(LocationContext);
+    location = useContext(LocationContext);
     zoomLevel = 8;
 
-    return (
+    const [providers, setProviders] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [help] = useContext(HelpContext);
+    console.log(help);
+
+    useEffect(() => {
+        const fetchInfo = () => {
+            let url = "http://code-medics.herokuapp.com/";
+
+            axios.get(url, {
+                params: {
+                    lat: location.latitude,
+                    long: location.longitude,
+                    service: help,
+                    return: 5
+                },
+                headers: {
+                    'Access-Control-Allow-Origin': '*',
+                  }
+            })
+                .then((res) => {
+                    console.log('posted')
+                    res.json()
+                })
+                .then((data) => {
+                    const arr = []
+                    for (const i of data) {
+                        arr.push(i)
+                    }
+                    setProviders(arr)
+                })
+                .then(() => setIsLoading(false))
+                .catch((err) => {
+                    console.log(err)
+                });
+        }
+
+        fetchInfo()
+    });
+
+    const RenderLists = () => {
+        for (const i of providers) {
+            return (
+                <ProviderInstance data={i} />
+            )
+        }
+    }
+
+    return isLoading === true ? (
         <div className="location-page">
             <div className="google-map">
                 <GoogleMapReact
-                    bootstrapURLKeys={{ key: '' }}
+                    bootstrapURLKeys={{ key: 'AIzaSyBYM7vzfoFiQS4FY2mHET7dfFymyNjSKNo' }}
                     center={location}
                     zoom={zoomLevel}
                 >
@@ -37,7 +95,40 @@ const Location = (location, zoomLevel) => {
                 </GoogleMapReact>
             </div>
         </div>
-    )
+    ) :
+        (
+            <div className="response-page">
+                <div className="head border-bottom">
+                    <a href="/emergency" aria-label="previous page" className="previous">
+                        <svg width="11" height="17" viewBox="0 0 11 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M0.840796 8.31066L8.53067 16.1413L10.3743 14.3333L4.48849 8.34374L10.4819 2.46315L8.67269 0.620804L0.840796 8.31066Z" fill="#1D3354" />
+                        </svg>
+                    </a>
+                    <h1 className="heading__location">Hospitals close by:</h1 >
+                </div>
+                <div className="border-bottom">
+                    <p>
+                        Help is on the way. If you do not recieve an ambulance in record
+                        time, please call any of the hospitals below.
+                    </p>
+                </div>
+                <div className="providers">
+                    <RenderLists />
+                </div>
+            </div>
+        )
 }
 
+
 export default Location;
+
+//compare ETA via distance API
+//send alert to medics
+//get status of ambulance response
+//render response page once it's successful
+
+//send out request to nearest hospitals
+//.then call function to query status. Loop through reponses to first call
+//if status is pending, repeat call after 5 seconds. End process after 1 minute
+//if status still pending, return 'No response, callone of the following'. if response,
+//display details and ETA. nearest hospitals container constant

@@ -1,31 +1,24 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import { useHistory } from 'react-router-dom';
-import axios from "axios";
-import LocationContext from "./locationContext";
+import HelpContext from "../Contexts/locationContext";
+import LocationContext from "../Contexts/locationContext";
 import Button from "../Button/button";
 import './emergency.css'
 
 const Emergency = () => {
-    const [help, setHelp] = useState('');
-    const coordinates = React.useContext(LocationContext);
+    const location = useContext(LocationContext);
+    console.log(location);
+
+    const value = useContext(HelpContext);
     let history = useHistory();
-    const url = 'https://nothingyet.com';
+    console.log(value);
 
-    const getHelp = (e) => {
-        console.log('clicked!');
-        setHelp(e.target.props.service);
+    const getHelp = (service) => {
+        const [help, setHelp] = value;
+        setHelp(service);
+        console.log(help);
 
-        axios.post(url, {
-            emergencyType: help,
-            userLocation: coordinates
-        })
-            .then(
-                console.log('posted')
-            )
-            .then(redirect())
-            .catch((err) => {
-                console.log(err)
-            });
+        redirect();
     }
 
     const redirect = () => {
@@ -47,22 +40,19 @@ const Emergency = () => {
             <div className="option">
                 <h2>Surgical</h2>
                 <p>Examples are accidents, burns etc.</p>
-                <Button text="Get surgical help" service="obstetrics" onClick={getHelp} />
+                <Button text="Get surgical help" click={(e) => { getHelp('medical') }} />
             </div>
 
             <div className="option">
                 <h2>Medical</h2>
                 <p>Examples are sudden pain, collapse etc.</p>
-                <Button text="Get medical help" service="obstetrics" onClick={getHelp} />
+                <Button text="Get medical help" click={(e) => { getHelp('medical') }} />
             </div>
 
             <div className="option">
                 <h2>Obstetric</h2>
                 <p>Get help for pregnant women and women in labour.</p>
-                <Button text="Get obstetric help" service="obstetrics" onClick={()=> {
-                    console.log('clicked');
-                    getHelp();
-                }} />
+                <Button text="Get obstetric help" click={(e) => { getHelp('medical') }} />
             </div>
         </div>
     );
@@ -75,3 +65,6 @@ export default Emergency
 //do this via state >>>
 //redirect to interim page>>>, retain location info
 //use info with Google Maps API
+
+//context currently returns empty object
+//could be because of nestig. Fix.
