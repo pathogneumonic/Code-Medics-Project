@@ -1,23 +1,17 @@
 import React, { useContext } from "react";
 import { useHistory } from 'react-router-dom';
-import HelpContext from "../Contexts/locationContext";
 import LocationContext from "../Contexts/locationContext";
 import Button from "../Button/button";
 import './emergency.css'
 
 const Emergency = () => {
-    const location = useContext(LocationContext);
-    console.log(location);
-
-    const value = useContext(HelpContext);
+    const values = useContext(LocationContext);
+    const [help, setHelp] = values.service;
     let history = useHistory();
-    console.log(value);
 
     const getHelp = (service) => {
-        const [help, setHelp] = value;
         setHelp(service);
         console.log(help);
-
         redirect();
     }
 
@@ -40,7 +34,7 @@ const Emergency = () => {
             <div className="option">
                 <h2>Surgical</h2>
                 <p>Examples are accidents, burns etc.</p>
-                <Button text="Get surgical help" click={(e) => { getHelp('medical') }} />
+                <Button text="Get surgical help" click={(e) => { getHelp('surgical') }} />
             </div>
 
             <div className="option">
@@ -52,19 +46,10 @@ const Emergency = () => {
             <div className="option">
                 <h2>Obstetric</h2>
                 <p>Get help for pregnant women and women in labour.</p>
-                <Button text="Get obstetric help" click={(e) => { getHelp('medical') }} />
+                <Button text="Get obstetric help" click={(e) => { getHelp('obstetric') }} />
             </div>
         </div>
     );
 }
 
 export default Emergency
-
-//on click, post user location and required service to server>>>
-//which means, html5 geolocation, then post request>>>
-//do this via state >>>
-//redirect to interim page>>>, retain location info
-//use info with Google Maps API
-
-//context currently returns empty object
-//could be because of nestig. Fix.
