@@ -32,7 +32,7 @@ const Location = (location, zoomLevel) => {
 
     useEffect(() => {
         const fetchInfo = () => {
-            let url = "http://code-medics.herokuapp.com/";
+            let url = "https://code-medics.herokuapp.com/public/hospital/find";
 
             axios.get(url, {
                 params: {
@@ -40,9 +40,6 @@ const Location = (location, zoomLevel) => {
                     long: location.longitude,
                     service: help,
                     return: 5
-                },
-                headers: {
-                    'Access-Control-Allow-Origin': '*',
                 }
             })
                 .then((res) => {
