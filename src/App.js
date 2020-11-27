@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import LocationContext from "./Components/Contexts/locationContext";
-import HelpContext from "./Components/Contexts/helpContext";
 import HomePage from './Pages/Homepage';
 import EmergencyPage from './Pages/EmergencyType';
 import LocationPage from './Pages/LocationPage';
@@ -30,8 +29,7 @@ function App() {
 
   return (
     <main>
-      <LocationContext.Provider value={location}>
-        <HelpContext.Provider value={[help, setHelp]}>
+      <LocationContext.Provider value={{ coordinates: location, service: [help, setHelp] }}>
           <Switch>
             <Route path="/login" component={LoginPage} exact />
             <Route path="/signup" component={SignupPage} exact />
@@ -40,7 +38,6 @@ function App() {
             <Route path="/location" component={LocationPage} />
             <Route component={Error} />
           </Switch>
-        </HelpContext.Provider>
       </LocationContext.Provider>
     </main>
   );

@@ -3,7 +3,6 @@ import GoogleMapReact from 'google-map-react'
 import axios from "axios";
 import ProviderInstance from './response';
 import LocationContext from "../Contexts/locationContext";
-import HelpContext from "../Contexts/helpContext";
 import './userlocation.css';
 
 
@@ -22,13 +21,14 @@ const LocationPin = (props) => (
 )
 
 const Location = (location, zoomLevel) => {
-    location = useContext(LocationContext);
+    const values = useContext(LocationContext);
+    location = values.coordinates;
     zoomLevel = 8;
 
+    const [help] = values.service;
     const [providers, setProviders] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [help] = useContext(HelpContext);
-    console.log(help);
+    
 
     useEffect(() => {
         const fetchInfo = () => {
@@ -43,7 +43,7 @@ const Location = (location, zoomLevel) => {
                 },
                 headers: {
                     'Access-Control-Allow-Origin': '*',
-                  }
+                }
             })
                 .then((res) => {
                     console.log('posted')
@@ -62,7 +62,7 @@ const Location = (location, zoomLevel) => {
                 });
         }
 
-        fetchInfo()
+        fetchInfo();
     });
 
     const RenderLists = () => {
