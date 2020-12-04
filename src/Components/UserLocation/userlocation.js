@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import GoogleMapReact from 'google-map-react'
 import axios from "axios";
-import ProviderInstance from './response';
 import LocationContext from "../Contexts/locationContext";
 import './userlocation.css';
 
@@ -28,9 +27,10 @@ const Location = (location, zoomLevel) => {
     const [help] = values.service;
     const [providers, setProviders] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    
+
 
     useEffect(() => {
+        const arr = []
         const fetchInfo = () => {
             let url = "https://code-medics.herokuapp.com/public/hospital/find";
 
@@ -43,38 +43,43 @@ const Location = (location, zoomLevel) => {
                 }
             })
                 .then((res) => {
-                    console.log('posted')
-                    res.json()
-                })
-                .then((data) => {
-                    const arr = []
-                    for (const i of data) {
+                    const data = res.data
+                    for (const i of data.data) {
                         arr.push(i)
                     }
+                })
+                .then(() => {
                     setProviders(arr)
                 })
-                .then(() => setIsLoading(false))
+                .then(() => {
+                    setIsLoading(false)
+                })
                 .catch((err) => {
                     console.log(err)
                 });
         }
 
         fetchInfo();
-    });
+    }, []);
 
-    const RenderLists = () => {
-        for (const i of providers) {
-            return (
-                <ProviderInstance data={i} />
-            )
-        }
-    }
+    const RenderLists = () => (
+        providers.map(provider => (
+            <div key={provider.id} className="provider-info">
+                <div className="info">
+                    <h2>{provider.name}</h2>
+                    <p>{provider.address}</p>
+                    <p>{provider.eta}</p>
+                </div>
+                <a className="btn" href={`tel:${provider.contact}`}>Call</a>
+            </div>
+        ))
+    )
 
     return isLoading === true ? (
         <div className="location-page">
             <div className="google-map">
                 <GoogleMapReact
-                    bootstrapURLKeys={{ key: 'AIzaSyBYM7vzfoFiQS4FY2mHET7dfFymyNjSKNo' }}
+                    bootstrapURLKeys={{ key: process.env.REACT_APP_API_KEY }}
                     center={location}
                     zoom={zoomLevel}
                 >
@@ -96,14 +101,14 @@ const Location = (location, zoomLevel) => {
         (
             <div className="response-page">
                 <div className="head border-bottom">
-                    <a href="/emergency" aria-label="previous page" className="previous">
+                    <a href="/emergency" aria-label="previous page" className="previous__response">
                         <svg width="11" height="17" viewBox="0 0 11 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M0.840796 8.31066L8.53067 16.1413L10.3743 14.3333L4.48849 8.34374L10.4819 2.46315L8.67269 0.620804L0.840796 8.31066Z" fill="#1D3354" />
                         </svg>
                     </a>
-                    <h1 className="heading__location">Hospitals close by:</h1 >
+                    <h1 className="heading__response">Hospitals close by:</h1 >
                 </div>
-                <div className="border-bottom">
+                <div className="contacted border-bottom">
                     <p>
                         Help is on the way. If you do not recieve an ambulance in record
                         time, please call any of the hospitals below.
