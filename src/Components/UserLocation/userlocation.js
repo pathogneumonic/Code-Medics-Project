@@ -60,7 +60,7 @@ const Location = (location, zoomLevel) => {
         }
 
         fetchInfo();
-    }, []);
+    }, [help, location.latitude, location.longitude]);
 
     const RenderLists = () => (
         providers.map(provider => (
