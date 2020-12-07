@@ -6,7 +6,7 @@ import './userlocation.css';
 
 
 const LocationPin = (props) => (
-    <figure style={props.style}>
+    <figure>
         <svg width="232" height="278" viewBox="0 0 232 278" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g id="Group 7">
                 <circle id="Ellipse 1" cx="92.5" cy="138.5" r="10.5" fill="#9A19BA" />
@@ -27,7 +27,6 @@ const Location = (location, zoomLevel) => {
     const [help] = values.service;
     const [providers, setProviders] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const style = { lat: location.latitude, lng: location.longitude }
 
 
     useEffect(() => {
@@ -91,7 +90,10 @@ const Location = (location, zoomLevel) => {
                     </a>
                     <h1 className="heading__location">Please hold on while we find and contact hospitals near you.</h1 >
 
-                    <LocationPin style={style} />
+                    <LocationPin 
+                        lat= {location.latitude} 
+                        lng= {location.longitude}
+                    />
                 </GoogleMapReact>
             </div>
         </div>
