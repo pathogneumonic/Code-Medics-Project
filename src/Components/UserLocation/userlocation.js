@@ -6,7 +6,7 @@ import './userlocation.css';
 
 
 const LocationPin = (props) => (
-    <figure>
+    <figure style={props.style}>
         <svg width="232" height="278" viewBox="0 0 232 278" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g id="Group 7">
                 <circle id="Ellipse 1" cx="92.5" cy="138.5" r="10.5" fill="#9A19BA" />
@@ -27,6 +27,7 @@ const Location = (location, zoomLevel) => {
     const [help] = values.service;
     const [providers, setProviders] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const style = { lat: location.latitude, lng: location.longitude }
 
 
     useEffect(() => {
@@ -80,7 +81,7 @@ const Location = (location, zoomLevel) => {
             <div className="google-map">
                 <GoogleMapReact
                     bootstrapURLKeys={{ key: process.env.REACT_APP_API_KEY }}
-                    center={location}
+                    center={[location.latitude, location.longitude]}
                     zoom={zoomLevel}
                 >
                     <a href="/emergency" aria-label="previous page" className="previous">
@@ -90,10 +91,7 @@ const Location = (location, zoomLevel) => {
                     </a>
                     <h1 className="heading__location">Please hold on while we find and contact hospitals near you.</h1 >
 
-                    <LocationPin
-                        lat={location.latitude}
-                        lng={location.longitude}
-                    />
+                    <LocationPin style={style} />
                 </GoogleMapReact>
             </div>
         </div>
@@ -127,7 +125,7 @@ export default Location;
 //compare ETA via distance API
 //send alert to medics
 //get status of ambulance response
-//render response page once it's successful
+//render response page once it's successful >>>
 
 //send out request to nearest hospitals
 //.then call function to query status. Loop through reponses to first call

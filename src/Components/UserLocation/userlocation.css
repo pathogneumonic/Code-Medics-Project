@@ -1,8 +1,15 @@
+/*LOADING PAGE*/
+.google-map {
+    height: 100vh;
+    width: 100%;
+    overflow: hidden;
+}
+
 .previous {
     margin-left: 2rem;
-    position: relative;
+    position: absolute;
     left: -50vw;
-    top: 3rem;
+    top: -45vh;
 }
 
 .heading__location {
@@ -11,17 +18,13 @@
     margin: 0 2rem;
     max-width: 90vw;
     min-width: 80vw;
-    position: relative;
+    position: absolute;
     left: -50vw;
-    top: 6rem;
+    top: -35vh;
 }
 
-/*.google-map {
-    height: 100vh;
-    width: 100vw;
-}*/
-
 /*RESPONSE PAGE*/
+
 .head {
     padding: 3rem 1rem .5rem;
     border-bottom: .02rem solid rgba(0, 0, 0, 0.2);
@@ -33,7 +36,7 @@
     top: 3.5rem;
 }
 
-.head h1{
+.head h1 {
     font-size: 1.8em;
     position: relative;
     left: 1.5rem;
