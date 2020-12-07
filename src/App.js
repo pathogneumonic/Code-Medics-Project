@@ -28,7 +28,7 @@ function App() {
   }, [])
 
   return (
-    <main>
+    <main className = "app">
       <LocationContext.Provider value={{ coordinates: location, service: [help, setHelp] }}>
           <Switch>
             <Route path="/login" component={LoginPage} exact />
