@@ -114,8 +114,8 @@ const Location = (location, zoomLevel) => {
         <div className="flex provider-info">
             <Ambulance />
             <div className="info">
-                <h2>{accepter.name}</h2>
-                <p id="no-margin">is on the way</p>
+                <p id="no-margin">Help is on the way from</p>
+                <h2>{accepter.name}.</h2>
                 <p>{accepter.address}</p>
                 <p>{accepter.eta}</p>
                 <a className="btn" href={`tel:${accepter.contact}`}>Call</a>
