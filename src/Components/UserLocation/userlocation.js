@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import GoogleMapReact from 'google-map-react'
 import axios from "axios";
 import LocationContext from "../Contexts/locationContext";
+import Ambulance from "../Icons/ambulance";
 import './userlocation.css';
 
 
@@ -27,14 +28,16 @@ const Location = (location, zoomLevel) => {
     const [help] = values.service;
     const [providers, setProviders] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-
+    const [accepter, setAccepter] = useState({});
 
     useEffect(() => {
         const arr = []
-        const fetchInfo = () => {
-            let url = "https://code-medics.herokuapp.com/public/hospital/find";
+        let statusId;
 
-            axios.get(url, {
+        const findHospitals = () => {
+            let findUrl = "https://code-medics.herokuapp.com/public/hospital/find";
+
+            axios.get(findUrl, {
                 params: {
                     lat: location.latitude,
                     long: location.longitude,
@@ -48,6 +51,50 @@ const Location = (location, zoomLevel) => {
                         arr.push(i)
                     }
                 })
+        }
+
+        const fetchInfo = () => {
+            const getUrl = "https://code-medics.herokuapp.com/ambulance/request/add";
+            const idArray = [];
+            const responseArray = [];
+
+            axios.get(getUrl, {
+                params: {
+                    lat: location.latitude,
+                    long: location.longitude,
+                    count: 5,
+                    contact: +2348127955759,
+                }
+            })
+                .then((res) => {
+                    const data = res.data
+                    for (const i of data.data) {
+                        let reqId = i.pivot.ambulance_request_id
+                        idArray.push(reqId)
+                    }
+                })
+                .then(() => {
+
+                    for (const i of idArray) {
+                        statusId = i
+                        const statusUrl = `https://code-medics.herokuapp.com/ambulance/request/${statusId}/query`
+
+                        axios.get(statusUrl)
+                            .then((res) => {
+                                let response = res.data
+                                responseArray.push(response)
+
+                                if (response.data.status === "success") {
+                                    setAccepter(response.data.ambulances[0])
+                                }
+                                else {
+                                    //wait, then check again
+                                    setAccepter(response.data.ambulances[0])
+                                }
+                            })
+                    }
+                })
+                .then(findHospitals())
                 .then(() => {
                     setProviders(arr)
                 })
@@ -62,15 +109,30 @@ const Location = (location, zoomLevel) => {
         fetchInfo();
     }, [help, location.latitude, location.longitude]);
 
+
+    const Responder = () => (
+        <div className="flex provider-info">
+            <Ambulance />
+            <div className="info">
+                <h2>{accepter.name}</h2>
+                <p id="no-margin">is on the way</p>
+                <p>{accepter.address}</p>
+                <p>{accepter.eta}</p>
+                <a className="btn" href={`tel:${accepter.contact}`}>Call</a>
+            </div>
+        </div>
+    )
+
     const RenderLists = () => (
         providers.map(provider => (
-            <div key={provider.id} className="provider-info">
+            <div key={provider.id} className="flex provider-info">
+                <Ambulance />
                 <div className="info">
                     <h2>{provider.name}</h2>
                     <p>{provider.address}</p>
                     <p>{provider.eta}</p>
+                    <a className="btn" href={`tel:${provider.contact}`}>Call</a>
                 </div>
-                <a className="btn" href={`tel:${provider.contact}`}>Call</a>
             </div>
         ))
     )
@@ -90,9 +152,9 @@ const Location = (location, zoomLevel) => {
                     </a>
                     <h1 className="heading__location">Please hold on while we find and contact hospitals near you.</h1 >
 
-                    <LocationPin 
-                        lat= {location.latitude} 
-                        lng= {location.longitude}
+                    <LocationPin
+                        lat={location.latitude}
+                        lng={location.longitude}
                     />
                 </GoogleMapReact>
             </div>
@@ -108,9 +170,10 @@ const Location = (location, zoomLevel) => {
                     </a>
                     <h1 className="heading__response">Hospitals close by:</h1 >
                 </div>
+                <Responder />
                 <div className="contacted border-bottom">
                     <p>
-                        Help is on the way. If you do not recieve an ambulance in record
+                        If you do not receive an ambulance in record
                         time, please call any of the hospitals below.
                     </p>
                 </div>
@@ -125,12 +188,12 @@ const Location = (location, zoomLevel) => {
 export default Location;
 
 //compare ETA via distance API
-//send alert to medics
-//get status of ambulance response
+//send alert to medics>>>
+//get response>>>
 //render response page once it's successful >>>
 
-//send out request to nearest hospitals
+//send out request to nearest hospitals>>>
 //.then call function to query status. Loop through reponses to first call
 //if status is pending, repeat call after 5 seconds. End process after 1 minute
 //if status still pending, return 'No response, callone of the following'. if response,
-//display details and ETA. nearest hospitals container constant
+//display details and ETA. nearest hospitals container constant>>>
