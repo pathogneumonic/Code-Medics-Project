@@ -6,6 +6,7 @@ main {
 .home-container {
     height: 100vh;
     padding: 2rem;
+    text-align: center;
 }
 
 .figure__home {

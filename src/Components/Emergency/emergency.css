@@ -1,3 +1,8 @@
+.flex_center {
+    display: flex;
+    align-items: center;
+}
+
 .option {
     padding: 1rem 2.5rem;
     border-bottom: .02rem solid rgba(0, 0, 0, 0.2);;
@@ -17,6 +22,11 @@
 .option h2 {
     font-size: 1.2rem;
     margin-bottom: .5rem;
+}
+
+.emergency-icon {
+    margin: 0;
+    margin-right: 1.5rem;
 }
 
 button {

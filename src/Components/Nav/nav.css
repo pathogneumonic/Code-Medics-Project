@@ -1,0 +1,51 @@
+.nav__desktop {
+    display: none;
+}
+
+.nav__mobile {
+    background-color: rgba(255, 255, 255, 0.8);
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    z-index: 1;
+}
+
+.hamburger {
+    margin: 0;
+    position: relative;
+    left: 70vw;
+}
+
+a {
+    color: #9A19BA;
+}
+
+li {
+    list-style-type: none;
+    padding: .5rem;
+}
+
+a:hover, a:focus {
+    text-decoration: underline;
+}
+
+.false {
+    display: none;
+}
+
+.true {
+    display: block;
+}
+
+@media (min-width: 1200px) {
+    .nav__desktop {
+        display: block;
+    }
+    .nav__mobile {
+        display: none;
+    }
+    ul {
+        display: flex;
+        justify-content: space-between;
+    }
+}

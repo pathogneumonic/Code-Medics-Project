@@ -103,6 +103,7 @@ const Location = (location, zoomLevel) => {
                 })
                 .catch((err) => {
                     console.log(err)
+                   //display error message
                 });
         }
 
