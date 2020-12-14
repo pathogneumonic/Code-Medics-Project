@@ -28,16 +28,16 @@ function App() {
   }, [])
 
   return (
-    <main className = "app">
+    <main className="app">
       <LocationContext.Provider value={{ coordinates: location, service: [help, setHelp] }}>
-          <Switch>
-            <Route path="/login" component={LoginPage} exact />
-            <Route path="/signup" component={SignupPage} exact />
-            <Route path="/" component={HomePage} exact />
-            <Route path="/emergency" component={EmergencyPage} />
-            <Route path="/location" component={LocationPage} />
-            <Route component={Error} />
-          </Switch>
+        <Switch>
+          <Route path="/login" component={LoginPage} exact />
+          <Route path="/signup" component={SignupPage} exact />
+          <Route path="/" component={HomePage} exact />
+          <Route path="/emergency" component={EmergencyPage} />
+          <Route path="/location" component={LocationPage} />
+          <Route component={Error} />
+        </Switch>
       </LocationContext.Provider>
     </main>
   );

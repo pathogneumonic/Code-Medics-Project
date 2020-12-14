@@ -25,7 +25,7 @@ li {
     padding: .5rem;
 }
 
-a:hover, a:focus {
+li a:hover, li a:focus {
     text-decoration: underline;
 }
 
